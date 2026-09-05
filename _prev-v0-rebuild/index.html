@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Flight Engine — Performance Above the Clouds</title>
+<meta name="description" content="A clear, deterministic flight performance engine for the decisions that move aircraft forward."/>
+<meta name="theme-color" content="white" media="(prefers-color-scheme: light)"/>
+<meta name="theme-color" content="black" media="(prefers-color-scheme: dark)"/>
+<meta name="color-scheme" content="light dark"/>
+<link rel="icon" href="/icon-light-32x32.png" media="(prefers-color-scheme: light)"/>
+<link rel="icon" href="/icon-dark-32x32.png" media="(prefers-color-scheme: dark)"/>
+<link rel="icon" href="/icon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/apple-icon.png"/>
+<link rel="stylesheet" href="/site.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&display=swap">
+<style>
+/* ── 03 — Overview. Last section, in the "Modernist" design system from the
+   Claude Design build (Archivo 800, #ec3013 accent, 2px hairline grid, square
+   corners, grayscale). Every rule is namespaced under .fe-overview so it can
+   never reach the original hero / #engine / #demo above. ── */
+.fe-overview{
+  --m-bg:#f3f2f2;--m-surface:#eae9e9;--m-text:#201e1d;
+  --m-accent:#ec3013;--m-acc100:#fff2ef;--m-acc500:#ff563c;--m-acc700:#ae1800;--m-acc900:#4d170e;
+  --m-div:rgba(32,30,29,.4);
+  --m-n700:#605d5d;--m-n800:#444141;
+  display:block;background:var(--m-bg);color:var(--m-text);
+  font-family:"Archivo",system-ui,sans-serif;font-size:15px;line-height:1.55;font-weight:400;
+  border-top:2px solid var(--m-div);
+}
+.fe-overview *{box-sizing:border-box}
+.fe-overview .m-wrap{max-width:1180px;margin:0 auto;padding:48px 24px 40px}
+.fe-overview .m-kick{margin:0 0 16px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--m-acc700);font-weight:600}
+.fe-overview h2{font-family:"Archivo",sans-serif;font-weight:800;letter-spacing:-.015em;line-height:1.15;margin:0 0 16px;color:var(--m-text)}
+.fe-overview .m-h2{font-size:26px;max-width:32ch}
+.fe-overview .m-h2-lg{font-size:28px;margin:40px 0 16px}
+.fe-overview .m-lede{margin:0 0 36px;font-size:18px;line-height:1.5;max-width:58ch;color:var(--m-n800)}
+.fe-overview .m-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));border-top:2px solid var(--m-div);border-left:2px solid var(--m-div)}
+.fe-overview .m-cell{padding:24px;border-right:2px solid var(--m-div);border-bottom:2px solid var(--m-div)}
+.fe-overview .m-no{margin:0 0 12px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--m-n700)}
+.fe-overview .m-cell h3{font-family:"Archivo",sans-serif;font-weight:800;font-size:20px;line-height:1.15;margin:0 0 12px;color:var(--m-text)}
+.fe-overview .m-cell p{margin:0;font-size:15px;line-height:1.5;color:var(--m-n800)}
+.fe-overview .m-path{display:flex;flex-wrap:wrap;border:2px solid var(--m-div)}
+.fe-overview .m-step{flex:1 1 150px;padding:16px;border-right:2px solid var(--m-div)}
+.fe-overview .m-step:last-child{border-right:0}
+.fe-overview .m-step.accent{background:var(--m-accent);color:var(--m-bg)}
+.fe-overview .m-step.soft{background:var(--m-acc100);color:var(--m-acc900)}
+.fe-overview .m-step .s{margin:0 0 8px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.72}
+.fe-overview .m-step .l{margin:0;font-family:"Archivo",sans-serif;font-weight:800;font-size:15px;line-height:1.2}
+.fe-overview .m-note{margin:12px 0 0;font-size:13px;color:var(--m-n700)}
+.fe-overview .m-facts .m-cell > p:first-child{margin:0 0 8px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--m-n700)}
+.fe-overview .m-facts .m-cell > p:last-child{margin:0;font-family:"Archivo",sans-serif;font-weight:800;font-size:16px;color:var(--m-text)}
+.fe-overview .m-scope{margin:36px 0 0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--m-n700)}
+@media (max-width:640px){.fe-overview .m-wrap{padding:36px 16px}.fe-overview .m-step{flex-basis:50%}}
+</style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div class="hero-clouds" aria-hidden="true"></div>
+    <nav class="nav">
+      <div class="brand"><span class="brand-mark">FE</span> FLIGHT ENGINE</div>
+      <div class="nav-links">
+        <a href="#engine">The engine</a>
+        <a href="#demo">Live demo</a>
+        <a href="#overview">Overview</a>
+        <button class="nav-button" data-scroll="#demo">Launch demo <span>&#8599;</span></button>
+      </div>
+    </nav>
+    <div class="hero-content">
+      <p class="eyebrow"><span></span> Aerospace performance intelligence</p>
+      <h1>Power measured<br/><i>in every</i> takeoff.</h1>
+      <p class="hero-copy">A clear, deterministic flight performance engine for the decisions that move aircraft forward.</p>
+      <div class="hero-actions">
+        <button class="primary-button" data-scroll="#engine">Explore the engine <span>&#8595;</span></button>
+        <a href="#engine" class="text-link">See how it works <span>&#8594;</span></a>
+      </div>
+    </div>
+    <div class="hero-caption"><span>FE / 01</span><span>Precision above the clouds</span></div>
+  </section>
+
+  <section class="intro" id="engine">
+    <div class="section-kicker">01 — THE ENGINE</div>
+    <div>
+      <h2>From runway to<br/><em>reliable lift.</em></h2>
+      <p>Flight Engine turns the variables behind every takeoff into a confident, traceable answer. Built for clarity. Guarded for safety.</p>
+    </div>
+    <div class="intro-stat"><strong>0.01</strong><span>Performance<br/>precision index</span></div>
+  </section>
+
+  <section class="demo" id="demo">
+    <div class="section-heading">
+      <div>
+        <div class="section-kicker">02 — LIVE CALCULATION</div>
+        <h2>Set the conditions.</h2>
+      </div>
+      <span class="status"><i></i> Engine online</span>
+    </div>
+    <div class="demo-grid">
+      <div class="input-panel">
+        <p class="panel-note">Define your flight case and adjust the inputs.</p>
+        <div class="field-grid">
+          <label>Gross weight<div><input type="number" data-k="weight" min="40000" max="79000" value="62000"/><span>kg</span></div></label>
+          <label>Pressure altitude<div><input type="number" data-k="altitude" min="0" max="14000" value="1500"/><span>ft</span></div></label>
+          <label>Outside air temp<div><input type="number" data-k="oat" min="-40" max="55" value="24"/><span>&deg;C</span></div></label>
+          <label>Flap setting<div><input type="number" data-k="flap" min="0" max="30" value="10"/><span>deg</span></div></label>
+          <label>Runway available<div><input type="number" data-k="runway" min="800" max="4000" value="2800"/><span>m</span></div></label>
+          <label>Headwind component<div><input type="number" data-k="wind" min="-15" max="35" value="8"/><span>kt</span></div></label>
+        </div>
+        <button class="calculate">Calculate performance <span>&#8594;</span></button>
+      </div>
+      <div class="output-panel" id="output">
+        <div class="output-top"><span>TAKEOFF OUTPUT</span><span>RULE SET V1.0</span></div>
+        <div class="speed-row">
+          <div><span>V1</span><strong data-o="v1">130</strong><small>KT</small></div>
+          <div><span>VR</span><strong data-o="vr">134</strong><small>KT</small></div>
+          <div><span>V2</span><strong data-o="v2">146</strong><small>KT</small></div>
+        </div>
+        <div class="output-metrics">
+          <div class="metric"><span>Takeoff distance required</span><strong data-o="tod">2,095 m</strong></div>
+          <div class="metric"><span>Net climb gradient</span><strong data-o="grad">8.72 %</strong></div>
+          <div class="metric"><span>Field-length margin</span><strong data-o="margin">+705 m</strong></div>
+        </div>
+        <div class="margin-note" data-o="note"><span></span>Runway margin adequate</div>
+        <p class="output-foot">Deterministic output &middot; no AI on calculation path</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing">
+    <div class="closing-line"></div>
+    <p>Performance is not a guess.<br/><strong>It is a system.</strong></p>
+    <span>FLIGHT ENGINE / TAKEOFF PERFORMANCE DEMO</span>
+  </section>
+
+  <!-- 03 — Overview (last section, Modernist design system, isolated) -->
+  <section id="overview" class="fe-overview">
+    <div class="m-wrap">
+      <p class="m-kick">01 — What you get</p>
+      <h2 class="m-h2">Every number you can defend.</h2>
+      <p class="m-lede">Flight Engine turns takeoff conditions into a decision in seconds &mdash; a deterministic engine computes every figure, a guarded AI layer explains it, and the audit trail records both.</p>
+
+      <div class="m-grid">
+        <div class="m-cell"><p class="m-no">01</p><h3>Seconds, not spreadsheets.</h3><p>Enter the conditions, read the answer. Manual calculation time collapses to near zero.</p></div>
+        <div class="m-cell"><p class="m-no">02</p><h3>No number is ever a guess.</h3><p>Same inputs, same result &mdash; from a rule set you can inspect. No hidden assumptions, no drift.</p></div>
+        <div class="m-cell"><p class="m-no">03</p><h3>AI you can show a client.</h3><p>It explains the result in plain language and is checked before it appears. It cannot invent a figure.</p></div>
+        <div class="m-cell"><p class="m-no">04</p><h3>Audit-ready by default.</h3><p>Every calculation and every explanation is recorded &mdash; traceable from input to decision.</p></div>
+      </div>
+
+      <h2 class="m-h2-lg">The calculation path</h2>
+      <div class="m-path">
+        <div class="m-step"><p class="s">Step 1</p><p class="l">Inputs</p></div>
+        <div class="m-step accent"><p class="s">Step 2</p><p class="l">Deterministic engine</p></div>
+        <div class="m-step"><p class="s">Step 3</p><p class="l">Result</p></div>
+        <div class="m-step"><p class="s">Step 4</p><p class="l">Guarded AI</p></div>
+        <div class="m-step soft"><p class="s">Step 5</p><p class="l">Verify vs. result</p></div>
+        <div class="m-step"><p class="s">Step 6</p><p class="l">Explanation or blocked</p></div>
+      </div>
+      <p class="m-note">The result is produced before AI is called. An AI failure never blocks the number.</p>
+
+      <h2 class="m-h2-lg">Delivery frame</h2>
+      <div class="m-grid m-facts">
+        <div class="m-cell"><p>Team</p><p>6 people, fixed</p></div>
+        <div class="m-cell"><p>Cadence</p><p>5 &times; 2-week sprints</p></div>
+        <div class="m-cell"><p>Gates</p><p>SRR &middot; PDR &middot; CDR &middot; TRR &middot; ORR</p></div>
+        <div class="m-cell"><p>Risk</p><p>Live scored register</p></div>
+        <div class="m-cell"><p>Baselines</p><p>Scope &middot; schedule &middot; cost</p></div>
+        <div class="m-cell"><p>Deadline</p><p>10 weeks to release</p></div>
+      </div>
+
+      <p class="m-scope">Flight Engine MVP prototype &mdash; illustrative calculation model, not certified takeoff-performance data.</p>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var R = {weight:[40000,79000], altitude:[0,14000], oat:[-40,55], flap:[0,30], runway:[800,4000], wind:[-15,35]};
+  var inputs = {};
+  document.querySelectorAll('input[data-k]').forEach(function (el) { inputs[el.dataset.k] = el; });
+  var out = {};
+  document.querySelectorAll('[data-o]').forEach(function (el) { out[el.dataset.o] = el; });
+
+  function nf(n, d) { return n.toLocaleString('en-US', {minimumFractionDigits: d || 0, maximumFractionDigits: d || 0}); }
+
+  function read() {
+    var p = {}, ok = true;
+    Object.keys(R).forEach(function (k) {
+      var v = parseFloat(inputs[k].value);
+      var bad = isNaN(v) || v < R[k][0] || v > R[k][1];
+      inputs[k].setAttribute('aria-invalid', bad ? 'true' : 'false');
+      if (bad) ok = false;
+      p[k] = v;
+    });
+    p._ok = ok;
+    return p;
+  }
+
+  // Deterministic model for a generic 150-seat narrowbody twin ("Narrowbody T-A").
+  // Physically grounded (ISA density ratio, V ∝ sqrt(W/sigma), TOD ∝ (W/Wref)^2 / sigma^1.6,
+  // OEI 2nd-segment gradient falling with weight/altitude/temp/flap). Illustrative —
+  // tuned to plausible jet magnitudes, not certified AFM data.
+  var W_REF = 60000;          // kg — reference takeoff weight
+  var VS_REF = 122;           // kt CAS — 1g stall at W_REF, flap 15, sigma 1
+  var TOD_REF = 1650;         // m — takeoff distance required at reference conditions
+
+  function isa(altFt, oatC) {
+    var delta = Math.pow(1 - 6.87535e-6 * altFt, 5.2559);   // pressure ratio
+    var theta = (oatC + 273.15) / 288.15;                    // temperature ratio
+    return { delta: delta, theta: theta, sigma: delta / theta };
+  }
+
+  function model(p) {
+    var w = p.weight, rwy = p.runway, wind = p.wind, flap = p.flap;
+    var a = isa(p.altitude, p.oat);
+
+    // reference speeds — stall scales with sqrt(wing loading / density), more flap lowers it
+    var vs = VS_REF * Math.sqrt((w / W_REF) / a.sigma) * (1 - flap * 0.006);
+    var vr = 1.10 * vs;
+    var v2 = 1.20 * vs;
+    var v1 = vr - 3 - Math.max(wind, 0) * 0.15;
+
+    // takeoff distance required
+    var flapTod = 1 + (15 - flap) * 0.018;      // less flap -> longer roll
+    var windTod = 1 - wind * 0.006;             // headwind shortens, tailwind extends
+    var tod = TOD_REF
+            * Math.pow(w / W_REF, 2)
+            * Math.pow(1 / a.sigma, 1.6)
+            * flapTod * windTod;
+
+    // net one-engine-inoperative 2nd-segment climb gradient (%), floored at the
+    // regulatory 2.4% minimum for a twin
+    var grad = 11.0 * (W_REF / w) * Math.pow(a.sigma, 0.7)
+             - flap * 0.12
+             - 2.0 * (1 - a.delta);
+    grad = Math.max(grad, 2.4);
+
+    return {
+      v1: Math.round(v1), vr: Math.round(vr), v2: Math.round(v2),
+      tod: Math.round(tod), grad: grad, margin: Math.round(rwy - tod)
+    };
+  }
+
+  function render(r) {
+    out.v1.textContent = r.v1;
+    out.vr.textContent = r.vr;
+    out.v2.textContent = r.v2;
+    out.tod.textContent = nf(r.tod) + ' m';
+    out.grad.textContent = r.grad.toFixed(2) + ' %';
+    out.margin.textContent = (r.margin >= 0 ? '+' : '') + nf(r.margin) + ' m';
+    var danger = r.margin < 0;
+    out.note.className = 'margin-note' + (danger ? ' danger' : '');
+    out.note.innerHTML = '<span></span>' + (danger
+      ? 'Required distance exceeds runway available by ' + nf(Math.abs(r.margin)) + ' m'
+      : 'Runway margin adequate');
+  }
+
+  function run() {
+    var p = read();
+    if (p._ok) render(model(p));
+  }
+
+  document.querySelector('.calculate').addEventListener('click', run);
+  Object.keys(inputs).forEach(function (k) { inputs[k].addEventListener('input', run); });
+  document.querySelectorAll('[data-scroll]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = document.querySelector(b.dataset.scroll);
+      if (t) t.scrollIntoView({behavior: 'smooth'});
+    });
+  });
+
+  run();
+})();
+</script>
+</body>
+</html>
