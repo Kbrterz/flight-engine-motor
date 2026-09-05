@@ -1,13 +1,8 @@
-# Flight Engine — landing site
+# Flight Engine — flight-engine-motor.vercel.app
 
-Single-file static site for **flight-engine-motor.vercel.app**.
+`index.html` is the Claude Design export ("modernist" system): a single
+self-contained bundled page. Pages: Overview / Console / Rule Set / Audit Trail
+(client-side routed, no server, no build).
 
-- `index.html` — the whole site. Three sections:
-  1. `#engine` — The engine
-  2. `#demo` — Live takeoff calculation (deterministic, runs client-side)
-  3. `#overview` — What you get (client-facing value, two-layer architecture, governance facts)
-- `vercel.json` — static hosting config (clean URLs).
-
-No build step. Deploy = serve `index.html`.
-
-Calculation model is illustrative, not certified performance data.
+`_prev-v0-rebuild/` — the earlier faithful rebuild of the old v0 landing
+(hero + engine + demo + Overview section). Kept for reference, not deployed.
