@@ -45,7 +45,13 @@
 .fe-overview .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin:0 0 18px}
 .fe-overview h1{font-family:"Newsreader",Georgia,serif;font-weight:400;font-size:clamp(2rem,5.6vw,2.9rem);line-height:1.08;letter-spacing:-.01em;margin:0 0 16px;text-wrap:balance;color:var(--ink);max-width:20ch}
 .fe-overview h1 em{font-style:italic;color:var(--accent-ink)}
-.fe-overview .lede{font-size:1.08rem;color:var(--ink-soft);max-width:58ch;margin:0}
+.fe-overview .lede{font-size:1.12rem;color:var(--ink-soft);max-width:56ch;margin:0}
+.fe-overview .gains{display:grid;gap:14px;grid-template-columns:1fr 1fr;margin-top:4px}
+@media (max-width:640px){.fe-overview .gains{grid-template-columns:1fr}}
+.fe-overview .gain{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--ov-shadow)}
+.fe-overview .gain .k{font-family:"Newsreader",serif;font-weight:500;font-size:1.18rem;line-height:1.25;color:var(--ink);margin:0 0 6px}
+.fe-overview .gain .k b{color:var(--accent-ink);font-weight:500}
+.fe-overview .gain p{margin:0;font-size:.93rem;color:var(--ink-soft);line-height:1.5}
 .fe-overview .ov-hero{position:relative;padding-bottom:34px;border-bottom:1px solid var(--line);margin-bottom:14px;overflow:hidden}
 .fe-overview .ov-hero .turbine{position:absolute;top:-30px;right:-46px;width:260px;height:260px;opacity:.45;pointer-events:none;color:var(--line-strong)}
 @media (max-width:720px){.fe-overview .ov-hero .turbine{width:150px;height:150px;right:-24px;top:-6px}}
@@ -197,9 +203,19 @@
           </g>
         </svg>
         <p class="eyebrow">Aerospace Performance Intelligence</p>
-        <h1>A flight-engineering platform, shipped <em>under full governance.</em></h1>
-        <p class="lede">Flight Engine turns takeoff conditions into decisions &mdash; and shows how an AI-heavy engineering build can be scoped, de-risked and delivered on a hard deadline.</p>
+        <h1>Faster answers. <em>Zero silent errors.</em> Every number you can defend.</h1>
+        <p class="lede">Flight Engine turns takeoff conditions into decisions in seconds &mdash; with AI you can put in front of a client, and a full audit trail behind every result.</p>
       </header>
+
+      <div class="ov-sec">
+        <p class="sec-h">What you get</p>
+        <div class="gains">
+          <div class="gain"><p class="k"><b>Seconds, not spreadsheets.</b></p><p>Enter the conditions, read the answer. Manual calculation time collapses to near zero.</p></div>
+          <div class="gain"><p class="k"><b>No number is ever a guess.</b></p><p>Same inputs, same result &mdash; every time, from a rule set you can inspect. No hidden assumptions, no drift.</p></div>
+          <div class="gain"><p class="k"><b>AI you can show a client.</b></p><p>It explains the result in plain language and is checked before it ever appears. It cannot invent a figure.</p></div>
+          <div class="gain"><p class="k"><b>Audit-ready by default.</b></p><p>Every calculation and every explanation is recorded &mdash; traceable from input to decision, review to review.</p></div>
+        </div>
+      </div>
 
       <div class="ov-sec">
         <p class="sec-h">What it is</p>
@@ -254,15 +270,6 @@
       </div>
 
       <div class="band">AI assists the reader. <em>It never touches the decision.</em></div>
-
-      <div class="ov-sec">
-        <p class="sec-h">Why it matters</p>
-        <div class="trio">
-          <div class="val"><h4>Standardised knowledge</h4><p>Engineering rules move out of people's heads into one versioned set.</p></div>
-          <div class="val"><h4>Full traceability</h4><p>Every calculation and every AI output is recorded and reviewable.</p></div>
-          <div class="val"><h4>AI without the risk</h4><p>Assistance where it helps; a hard wall between it and the result.</p></div>
-        </div>
-      </div>
 
       <div class="ov-sec">
         <p class="sec-h">What it means for clients</p>
