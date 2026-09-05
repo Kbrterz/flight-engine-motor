@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flight Engine — Overview</title>
+<meta name="description" content="What clients gain from Flight Engine: faster answers, no silent errors, AI you can show a client, audit-ready by default.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&display=swap">
+<style>
+  :root{
+    --bg:#f3f2f2;--surface:#eae9e9;--text:#201e1d;
+    --accent:#ec3013;--acc100:#fff2ef;--acc500:#ff563c;--acc700:#ae1800;--acc900:#4d170e;
+    --div:rgba(32,30,29,.4);
+    --n700:#605d5d;--n800:#444141;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:"Archivo",system-ui,sans-serif;font-size:15px;line-height:1.55;font-weight:400;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:"Archivo",sans-serif;font-weight:800;letter-spacing:-.015em;line-height:1.12;margin:0}
+  a{color:var(--accent);text-underline-offset:3px}
+
+  header.bar{
+    display:flex;align-items:baseline;gap:24px;flex-wrap:wrap;
+    padding:16px 24px;border-bottom:2px solid var(--div);
+  }
+  .brand{font-weight:800;font-size:20px;letter-spacing:-.01em;text-transform:uppercase}
+  .brand-sub{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--n700)}
+  .bar .spacer{margin-left:auto}
+  .bar a{font-size:13px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--text)}
+  .bar a:hover{color:var(--accent)}
+
+  .hero{
+    display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+    padding:32px 24px;border-bottom:2px solid var(--div);
+  }
+  .hero .eyebrow{margin:0 0 12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--acc700)}
+  .hero h1{font-size:clamp(28px,4vw,50px);line-height:1.02;letter-spacing:-.02em;max-width:22ch}
+  .hero .turbine{flex:0 0 auto;width:min(30vw,132px);height:auto;opacity:.9;color:var(--accent)}
+  @media (prefers-reduced-motion:no-preference){
+    .hero .turbine g{transform-origin:260px 260px;animation:spin 140s linear infinite}
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  main{max-width:1180px;margin:0 auto;padding:40px 24px 48px}
+  .kick{margin:0 0 16px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--acc700)}
+  h2.sec{font-size:26px;max-width:32ch;margin:0 0 16px}
+  h2.sec.lg{font-size:28px;margin:44px 0 16px}
+  .lede{margin:0 0 36px;font-size:18px;line-height:1.5;max-width:58ch;color:var(--n800)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));border-top:2px solid var(--div);border-left:2px solid var(--div)}
+  .cell{padding:24px;border-right:2px solid var(--div);border-bottom:2px solid var(--div)}
+  .cell .no{margin:0 0 12px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--n700)}
+  .cell h3{font-size:20px;line-height:1.15;margin:0 0 12px}
+  .cell p{margin:0;font-size:15px;line-height:1.5;color:var(--n800)}
+
+  .path{display:flex;flex-wrap:wrap;border:2px solid var(--div)}
+  .step{flex:1 1 150px;padding:16px;border-right:2px solid var(--div)}
+  .step:last-child{border-right:0}
+  .step.accent{background:var(--accent);color:var(--bg)}
+  .step.soft{background:var(--acc100);color:var(--acc900)}
+  .step .s{margin:0 0 8px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.72}
+  .step .l{margin:0;font-weight:800;font-size:15px;line-height:1.2}
+  .note{margin:12px 0 0;font-size:13px;color:var(--n700)}
+
+  .facts .cell > p:first-child{margin:0 0 8px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--n700)}
+  .facts .cell > p:last-child{margin:0;font-weight:800;font-size:16px;color:var(--text)}
+
+  footer{
+    border-top:2px solid var(--div);padding:16px 24px;
+    font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--n700);
+  }
+  @media (max-width:640px){main{padding:32px 16px}.step{flex-basis:50%}}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <span class="brand">Flight Engine</span>
+  <span class="brand-sub">Takeoff performance console</span>
+  <span class="spacer"></span>
+  <a href="/">Home</a>
+  <a href="/#engine">The engine</a>
+  <a href="/#demo">Live demo</a>
+</header>
+
+<section class="hero">
+  <div>
+    <p class="eyebrow">Aerospace performance intelligence</p>
+    <h1>Power measured in every takeoff.</h1>
+  </div>
+  <svg class="turbine" viewBox="0 0 520 520" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="260" cy="260" r="250"/>
+    <circle cx="260" cy="260" r="190" stroke-dasharray="2 12"/>
+    <circle cx="260" cy="260" r="120"/>
+    <circle cx="260" cy="260" r="48"/>
+    <g>
+      <line x1="260" y1="10" x2="260" y2="120"/><line x1="260" y1="400" x2="260" y2="510"/>
+      <line x1="10" y1="260" x2="120" y2="260"/><line x1="400" y1="260" x2="510" y2="260"/>
+      <line x1="83" y1="83" x2="175" y2="175"/><line x1="345" y1="345" x2="437" y2="437"/>
+      <line x1="437" y1="83" x2="345" y2="175"/><line x1="175" y1="345" x2="83" y2="437"/>
+    </g>
+  </svg>
+</section>
+
+<main>
+  <p class="kick">01 — What you get</p>
+  <h2 class="sec">Every number you can defend.</h2>
+  <p class="lede">Flight Engine turns takeoff conditions into a decision in seconds &mdash; a deterministic engine computes every figure, a guarded AI layer explains it, and the audit trail records both.</p>
+
+  <div class="grid">
+    <div class="cell"><p class="no">01</p><h3>Seconds, not spreadsheets.</h3><p>Enter the conditions, read the answer. Manual calculation time collapses to near zero.</p></div>
+    <div class="cell"><p class="no">02</p><h3>No number is ever a guess.</h3><p>Same inputs, same result &mdash; from a rule set you can inspect. No hidden assumptions, no drift.</p></div>
+    <div class="cell"><p class="no">03</p><h3>AI you can show a client.</h3><p>It explains the result in plain language and is checked before it appears. It cannot invent a figure.</p></div>
+    <div class="cell"><p class="no">04</p><h3>Audit-ready by default.</h3><p>Every calculation and every explanation is recorded &mdash; traceable from input to decision.</p></div>
+  </div>
+
+  <h2 class="sec lg">The calculation path</h2>
+  <div class="path">
+    <div class="step"><p class="s">Step 1</p><p class="l">Inputs</p></div>
+    <div class="step accent"><p class="s">Step 2</p><p class="l">Deterministic engine</p></div>
+    <div class="step"><p class="s">Step 3</p><p class="l">Result</p></div>
+    <div class="step"><p class="s">Step 4</p><p class="l">Guarded AI</p></div>
+    <div class="step soft"><p class="s">Step 5</p><p class="l">Verify vs. result</p></div>
+    <div class="step"><p class="s">Step 6</p><p class="l">Explanation or blocked</p></div>
+  </div>
+  <p class="note">The result is produced before AI is called. An AI failure never blocks the number.</p>
+
+  <h2 class="sec lg">Delivery frame</h2>
+  <div class="grid facts">
+    <div class="cell"><p>Team</p><p>6 people, fixed</p></div>
+    <div class="cell"><p>Cadence</p><p>5 &times; 2-week sprints</p></div>
+    <div class="cell"><p>Gates</p><p>SRR &middot; PDR &middot; CDR &middot; TRR &middot; ORR</p></div>
+    <div class="cell"><p>Risk</p><p>Live scored register</p></div>
+    <div class="cell"><p>Baselines</p><p>Scope &middot; schedule &middot; cost</p></div>
+    <div class="cell"><p>Deadline</p><p>10 weeks to release</p></div>
+  </div>
+</main>
+
+<footer>Flight Engine MVP prototype &mdash; illustrative calculation model, not certified takeoff-performance data.</footer>
+
+</body>
+</html>
